@@ -5,10 +5,12 @@ import ResultDisplay from "./components/ResultDisplay";
 import CategorySelection from "./components/CategorySelection";
 import QualitativeForm from "./components/QualitativeForm";
 import QuantitativeForm from "./components/QuantitativeForm";
+import Header from "./components/Header";
 
 function App() {
   return (
     <BrowserRouter>
+      <Header />
       <Routes>
         <Route path='/' element={<CategorySelection />} />
         <Route path='/quantitative' element={<QuantitativeForm />} />
