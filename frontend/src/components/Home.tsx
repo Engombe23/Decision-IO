@@ -81,20 +81,18 @@ export default function Home() {
                 <label className='select-label' htmlFor='category'>
                   Enter your decision category:
                 </label>
-                <input
+                <textarea wrap="soft"
                   className='select-input'
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  type='text'
                   name='category'
                   placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
                   required
                 />
-                <input 
+                <textarea wrap="soft" 
                   className='select-input'
                   value={satisfaction}
                   onChange={(e) => setSatisfaction(e.target.value)} 
-                  type='text' 
                   placeholder='How satisfied are you? How risky is the new option?' required />
                 <QuantitativeForm />
                 <button onClick={handleLetsDecide} className='submit-button' disabled={!category.trim()}>

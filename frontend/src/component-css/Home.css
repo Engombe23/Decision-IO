@@ -68,8 +68,22 @@
   transition-duration: 0.5s;
   text-align: left; /* Align text to the left */
   vertical-align: top; /* Start text at the top */
-  overflow-wrap: normal;
+  overflow-wrap: normal; /* This is for inputs */
 }
+
+/* More specific rule for textarea elements using select-input */
+textarea.select-input {
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  width: 100%;
+  max-width: 500px;
+  height: 50px;
+  padding: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+
 .select-input:focus {
   height: auto;
   width: 60%;
