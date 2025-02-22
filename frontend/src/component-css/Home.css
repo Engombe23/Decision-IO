@@ -14,7 +14,9 @@
 .holder {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: center;
+  gap: 30px !important;
+  align-items: center;
 }
 
 .form {
@@ -126,8 +128,8 @@
 /* results page */
 
 .reportForm {
-  width: 80vw;
-  height: 80vh;
+  width: 80%;
+  height: 60vh;
   padding: 5%;
   background-color: white;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
