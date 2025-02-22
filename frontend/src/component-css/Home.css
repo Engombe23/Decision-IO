@@ -64,16 +64,17 @@
   background-color: #1f2937;
   border: 1px solid #4b5563;
   border-radius: 3rem;
+  height: 4vh;
   color: white;
-  transition-duration: 0.5s;
+  transition: all 0.5s;
   text-align: left; /* Align text to the left */
   vertical-align: top; /* Start text at the top */
   overflow-wrap: normal;
 }
 .select-input:focus {
-  height: auto;
-  width: 60%;
-  height: fit-content;
+  width: 90%;
+  height: 8vh;
+  transition: all 0.5s;
 }
 
 .submit-button {
@@ -101,6 +102,10 @@
   background-color: #1f2937;
   padding: 1.5rem;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border-radius: 0.5rem;
 }
 

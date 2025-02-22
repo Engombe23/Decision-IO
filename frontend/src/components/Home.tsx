@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../component-css/Home.css";
 import axios from "axios";
-import QuantitativeForm from "./QuantitativeForm";
+
 import QualitativeForm from "./QualitativeForm";
 
 export default function Home() {
@@ -90,13 +90,29 @@ export default function Home() {
                   placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
                   required
                 />
-                <input 
+                <label className='select-label' htmlFor='satisfaction'>
+                  example text
+                </label>
+                <input
                   className='select-input'
                   value={satisfaction}
-                  onChange={(e) => setSatisfaction(e.target.value)} 
-                  type='text' 
-                  placeholder='How satisfied are you? How risky is the new option?' required />
-                <QuantitativeForm />
+                  name='satisfaction'
+                  onChange={(e) => setSatisfaction(e.target.value)}
+                  type='text'
+                  placeholder='How much do you want to try a new option?'
+                  required
+                />
+                <label className='select-label' htmlFor='numTypesDone'>
+                  example text
+                </label>
+                <input
+                  className='select-input'
+                  type='number'
+                  min={0}
+                  name='numTypesDone'
+                  placeholder='How many times have you chosen this activity?'
+                  required
+                />{" "}
                 <button onClick={handleLetsDecide} className='submit-button' disabled={!category.trim()}>
                   Submit
                 </button>
@@ -112,7 +128,7 @@ export default function Home() {
             <button onClick={() => setStep(step - 1)} className='return'>
               {"<-"}
             </button>
-            <div className='reportForm' style={{color: 'black'}}>
+            <div className='reportForm' style={{ color: "black" }}>
               <h1>Results</h1>
               <p>{category}</p>
               <p>{satisfaction}</p>
