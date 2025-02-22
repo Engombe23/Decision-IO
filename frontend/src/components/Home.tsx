@@ -7,7 +7,7 @@ export default function Home() {
   const [transition, setTransition] = useState(false);
   const [step, setStep] = useState(0);
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleLetsDecide(e: React.FormEvent) {
     e.preventDefault();
     console.log(category);
     setStep(step + 1);
@@ -19,19 +19,27 @@ export default function Home() {
     switch (step) {
       case 0:
         return (
-          <form className='form' action=''>
-            <input
-              className='select-input'
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-              type='text'
-              name='category'
-              placeholder='Input a category (eg. Picking a Resteraunt, Choosing a TV show)'
-            />
-            <button onClick={handleSubmit} className='submit-button'>
-              Let's Decide...
-            </button>
-          </form>
+          <div>
+            <div id='title' className='title'>
+              DECISION.IO
+            </div>
+            <div id='subtitile' className='description'>
+              A smart tool that harnesses AI and probability theory to mathematically help you make better decisions.
+            </div>
+            <form className='form' action=''>
+              <input
+                className='select-input'
+                value={category}
+                onChange={(e) => setCategory(e.target.value)}
+                type='text'
+                name='category'
+                placeholder='Input a category (eg. Picking a Resteraunt, Choosing a TV show)'
+              />
+              <button onClick={handleLetsDecide} className='submit-button'>
+                Let's Decide...
+              </button>
+            </form>
+          </div>
         );
       case 1:
         return <div>Step 2 Content</div>;
@@ -46,13 +54,7 @@ export default function Home() {
     <div className='home-container'>
       <div id='left' className='left-section'>
         <div id='holder' className='holder'>
-          <div id='title' className='title'>
-            DECISION.IO
-          </div>
-          <div id='subtitile' className='description'>
-            A smart tool that harnesses AI and probability theory to mathematically help you make better decisions.
-          </div>
-          <div>{renderStepContent()}</div>
+          {renderStepContent()}
         </div>
       </div>
       <div id='right' className='right-section'></div>
