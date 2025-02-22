@@ -12,10 +12,10 @@ export default function Home() {
     question4: string;
   }>();
   const [step, setStep] = useState(0);
-  const [numTypesDone, setNumTypesDone] = useState(0);
   const [example1, setExample1] = useState("");
   const [example2, setExample2] = useState("");
   const [example3, setExample3] = useState("");
+  const [example4, setExample4] = useState("");
   const [location, setLocation] = useState("");
 
   async function handleLetsDecide(e: React.FormEvent) {
@@ -31,6 +31,15 @@ export default function Home() {
 
   async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    const results = await axios.post("http://localhost:8000/api/results", {
+      category,
+      example1,
+      example2,
+      example3,
+      example4,
+      parsedInitialQeustions,
+    });
 
     setStep(step + 1);
   }
@@ -113,24 +122,16 @@ export default function Home() {
                   onChange={(e) => setSatisfaction(e.target.value)}
                   required
                 />
-                <label className='select-label' htmlFor='numTypesDone'>
+                <label className='select-label' htmlFor='example1'>
                   {parsedInitialQeustions?.question1}
                 </label>
-                <input
-                  className='select-input'
-                  value={numTypesDone}
-                  onChange={(e) => setNumTypesDone(Number(e.target.value))}
-                  type='number'
-                  min={0}
-                  name='numTypesDone'
-                  required
-                />{" "}
+                <input className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} type='number' min={0} name='example1' required />
                 <label htmlFor=''>{parsedInitialQeustions?.question2}</label>
-                <input type='number' className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} />
+                <input type='number' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
                 <label htmlFor=''>{parsedInitialQeustions?.question3}</label>
-                <textarea wrap='soft' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
-                <label htmlFor=''>{parsedInitialQeustions?.question4}</label>
                 <textarea wrap='soft' className='select-input' value={example3} onChange={(e) => setExample3(e.target.value)} />
+                <label htmlFor=''>{parsedInitialQeustions?.question4}</label>
+                <textarea wrap='soft' className='select-input' value={example4} onChange={(e) => setExample4(e.target.value)} />
                 <label htmlFor=''>Enter Your location so we can give you accurate reccomendations.</label>
                 <textarea wrap='soft' className='select-input' value={location} onChange={(e) => setLocation(e.target.value)} />
                 <button onClick={handleFormSubmit} className='submit-button' disabled={!category.trim()}>
@@ -201,24 +202,16 @@ export default function Home() {
                   onChange={(e) => setSatisfaction(e.target.value)}
                   required
                 />
-                <label className='select-label' htmlFor='numTypesDone'>
+                <label className='select-label' htmlFor='example1'>
                   {parsedInitialQeustions?.question1}
                 </label>
-                <input
-                  className='select-input'
-                  value={numTypesDone}
-                  onChange={(e) => setNumTypesDone(Number(e.target.value))}
-                  type='number'
-                  min={0}
-                  name='numTypesDone'
-                  required
-                />{" "}
+                <input className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} type='number' min={0} name='example1' required />
                 <label htmlFor=''>{parsedInitialQeustions?.question2}</label>
-                <input type='number' className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} />
+                <input type='number' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
                 <label htmlFor=''>{parsedInitialQeustions?.question3}</label>
-                <textarea wrap='soft' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
-                <label htmlFor=''>{parsedInitialQeustions?.question4}</label>
                 <textarea wrap='soft' className='select-input' value={example3} onChange={(e) => setExample3(e.target.value)} />
+                <label htmlFor=''>{parsedInitialQeustions?.question4}</label>
+                <textarea wrap='soft' className='select-input' value={example4} onChange={(e) => setExample4(e.target.value)} />
                 <label htmlFor=''>Enter Your location so we can give you accurate reccomendations.</label>
                 <textarea wrap='soft' className='select-input' value={location} onChange={(e) => setLocation(e.target.value)} />
               </form>
