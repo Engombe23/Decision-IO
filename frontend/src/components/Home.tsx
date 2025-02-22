@@ -6,6 +6,7 @@ import QualitativeForm from "./QualitativeForm";
 
 export default function Home() {
   const [category, setCategory] = useState("");
+  const [satisfaction, setSatisfaction] = useState("");
   const [transition, setTransition] = useState(false);
   const [parsedInitialQeustions, setParsedInitialQuestions] = useState([]);
   const [step, setStep] = useState(0);
@@ -89,7 +90,12 @@ export default function Home() {
                   placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
                   required
                 />
-                <input className='select-input' type='text' placeholder='How satisfied are you? How risky is the new option?' required />
+                <input 
+                  className='select-input'
+                  value={satisfaction}
+                  onChange={(e) => setSatisfaction(e.target.value)} 
+                  type='text' 
+                  placeholder='How satisfied are you? How risky is the new option?' required />
                 <QuantitativeForm />
                 <button onClick={handleLetsDecide} className='submit-button' disabled={!category.trim()}>
                   Submit
@@ -106,7 +112,11 @@ export default function Home() {
             <button onClick={() => setStep(step - 1)} className='return'>
               {"<-"}
             </button>
-            <div className='reportForm'>Results</div>
+            <div className='reportForm' style={{color: 'black'}}>
+              <h1>Results</h1>
+              <p>{category}</p>
+              <p>{satisfaction}</p>
+            </div>
           </div>
         );
       default:
