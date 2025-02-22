@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function QualitativeForm() {
+<<<<<<< HEAD
   return <div>
     <textarea wrap="soft"
       className='select-input'
@@ -8,4 +9,7 @@ export default function QualitativeForm() {
       required
     />
   </div>;
+=======
+  return <div></div>;
+>>>>>>> 679ea8a8cdd5632d353e48df044d4c02db98fd01
 }

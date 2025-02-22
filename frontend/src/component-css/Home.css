@@ -14,7 +14,9 @@
 .holder {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  justify-content: center;
+  gap: 30px !important;
+  align-items: center;
 }
 
 .form {
@@ -64,8 +66,9 @@
   background-color: #1f2937;
   border: 1px solid #4b5563;
   border-radius: 3rem;
+  height: 4vh;
   color: white;
-  transition-duration: 0.5s;
+  transition: all 0.5s;
   text-align: left; /* Align text to the left */
   vertical-align: top; /* Start text at the top */
   overflow-wrap: normal; /* This is for inputs */
@@ -85,9 +88,9 @@ textarea.select-input {
 
 
 .select-input:focus {
-  height: auto;
-  width: 60%;
-  height: fit-content;
+  width: 90%;
+  height: 8vh;
+  transition: all 0.5s;
 }
 
 .submit-button {
@@ -115,6 +118,10 @@ textarea.select-input {
   background-color: #1f2937;
   padding: 1.5rem;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border-radius: 0.5rem;
 }
 
@@ -135,8 +142,8 @@ textarea.select-input {
 /* results page */
 
 .reportForm {
-  width: 80vw;
-  height: 80vh;
+  width: 80%;
+  height: 60vh;
   padding: 5%;
   background-color: white;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
