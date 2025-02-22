@@ -1,11 +1,11 @@
-require('dotenv').config();
+require("dotenv").config();
 const { GoogleGenerativeAI, SchemaType } = require("@google/generative-ai");
 const express = require("express");
 const axios = require("axios");
 const cors = require("cors");
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = 8000;
 
 // Middleware
 app.use(cors());
@@ -16,7 +16,7 @@ app.post("/api/category", async (req, res) => {
   try {
     const category = req.body;
     const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-    
+
     const schema = {
       description: "Schema for gathering user input to determine explore vs. exploit probability",
       type: SchemaType.OBJECT,
@@ -74,7 +74,10 @@ app.post("/api/category", async (req, res) => {
       1. *Past behavior (T):* How many times the user has chosen their existing option.  
       2. *Satisfaction level:* How happy they are with their current choice.  
       3. *Risk tolerance (k):* Their willingness to try something new.  
-      4. *Current mood:* How adventurous they feel at the moment. `
+      4. *Current mood:* How adventurous they feel at the moment. 
+      
+      IMPORTANT, the output you provide should be an object, the keys should be question1, question2, question3, question4 and the values should be tailored to the specific category that the user provided (Eg for going on a night out it should ask how many times the user has gone out to their most popular venue or something similar)
+      `
     );
     console.log(result.response.text());
     res.json(JSON.stringify(result.response.text()));

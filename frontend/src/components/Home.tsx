@@ -17,10 +17,10 @@ export default function Home() {
     e.preventDefault();
     console.log(category);
     setStep(step + 1);
-    const data = await axios.post("http://localhost:5000/api/category");
+    const data = await axios.post("http://localhost:8000/api/category");
     console.log(data);
     // const parsedData = JSON.parse(data);
-    //setParsedInitialQuestions(parsedData);
+    // setParsedInitialQuestions(parsedData);
     setTransition(true);
   }
 
@@ -88,12 +88,8 @@ export default function Home() {
                 <label className='select-label' htmlFor='category'>
                   Enter your decision category:
                 </label>
-<<<<<<< HEAD
-                <textarea wrap="soft"
-=======
                 <textarea
                   wrap='soft'
->>>>>>> 4b5684cc71eb34b1184e32f1d2f39ac5f4d82730
                   className='select-input'
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
@@ -101,15 +97,6 @@ export default function Home() {
                   placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
                   required
                 />
-<<<<<<< HEAD
-                <textarea wrap="soft" 
-                  className='select-input'
-                  value={satisfaction}
-                  onChange={(e) => setSatisfaction(e.target.value)} 
-                  placeholder='How satisfied are you? How risky is the new option?' required />
-                <QuantitativeForm />
-                <button onClick={handleLetsDecide} className='submit-button' disabled={!category.trim()}>
-=======
                 <label className='select-label' htmlFor='satisfaction'>
                   example text
                 </label>
@@ -144,7 +131,6 @@ export default function Home() {
                 <label htmlFor=''>example</label>
                 {/* google search thing goes here */}
                 <button onClick={handleFormSubmit} className='submit-button' disabled={!category.trim()}>
->>>>>>> 679ea8a8cdd5632d353e48df044d4c02db98fd01
                   Submit
                 </button>
               </form>
