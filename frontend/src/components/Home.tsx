@@ -5,6 +5,7 @@ import axios from "axios";
 export default function Home() {
   const [category, setCategory] = useState("");
   const [transition, setTransition] = useState(false);
+  const [parsedInitialQeustions, setParsedInitialQuestions] = useState([]);
   const [step, setStep] = useState(0);
 
   async function handleLetsDecide(e: React.FormEvent) {
@@ -12,6 +13,9 @@ export default function Home() {
     console.log(category);
     setStep(step + 1);
     // const data = await axios.post("...");
+    //const parsedData = JOSN.parse(data.response);
+    //setParsedInitialQuestions(parsedData);
+
     setTransition(true);
   }
 
@@ -34,17 +38,42 @@ export default function Home() {
                 type='text'
                 name='category'
                 placeholder='Input a category (eg. Picking a Resteraunt, Choosing a TV show)'
+                required
               />
-              <button onClick={handleLetsDecide} className='submit-button'>
-                Let's Decide...
-              </button>
+              <input type='submit' onClick={handleLetsDecide} className='submit-button' disabled={!category.trim()} />
             </form>
           </div>
         );
       case 1:
-        return <div>Step 2 Content</div>;
+        return (
+          <div>
+            <button onClick={() => setStep(step - 1)} className='return'>
+              {"<-"}
+            </button>
+            <form>Step 2 Content</form>;
+          </div>
+        );
+
       case 2:
-        return <div>Step 3 Content</div>;
+        return (
+          <div>
+            {" "}
+            <button onClick={() => setStep(step - 1)} className='return'>
+              {"<-"}
+            </button>
+            Step 3 Content
+          </div>
+        );
+      case 3:
+        return (
+          <div>
+            {" "}
+            <button onClick={() => setStep(step - 1)} className='return'>
+              {"<-"}
+            </button>
+            Step 3 Content
+          </div>
+        );
       default:
         return <div>Invalid Step</div>;
     }
