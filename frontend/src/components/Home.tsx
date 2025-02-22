@@ -14,6 +14,7 @@ export default function Home() {
     e.preventDefault();
     console.log(category);
     setStep(step + 1);
+
     // const data = await axios.post("...");
     //const parsedData = JOSN.parse(data.response);
     //setParsedInitialQuestions(parsedData);
@@ -25,65 +26,80 @@ export default function Home() {
     switch (step) {
       case 0:
         return (
-          <div>
-            <div id='title' className='title'>
-              DECISION.IO
+          <div className='stepZero'>
+            <div id='left' className='left-section'>
+              <div id='holder' className='holder'>
+                <div>
+                  <div id='title' className='title'>
+                    DECISION.IO
+                  </div>
+                  <div id='subtitile' className='description'>
+                    A smart tool that harnesses AI and probability theory to mathematically help you make better decisions.
+                  </div>
+                  <form className='form' action=''>
+                    <input
+                      className='select-input'
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      type='text'
+                      name='category'
+                      placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
+                      required
+                    />
+                    <input type='submit' onClick={handleLetsDecide} className='submit-button' disabled={!category.trim()} />
+                  </form>
+                </div>
+              </div>
             </div>
-            <div id='subtitile' className='description'>
-              A smart tool that harnesses AI and probability theory to mathematically help you make better decisions.
-            </div>
-            <form className='form' action=''>
-              <input
-                className='select-input'
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                type='text'
-                name='category'
-                placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
-                required
-              />
-              <input type='submit' onClick={handleLetsDecide} className='submit-button' disabled={!category.trim()} />
-            </form>
+            <div id='right' className='right-section'></div>
           </div>
         );
       case 1:
         return (
-          <div>
-            <button onClick={() => setStep(step - 1)} className='return'>
-              {"<-"}
-            </button>
-            <button onClick={() => setStep(step + 1)} className='return'>
-              {"->"}
-            </button>
-            <form className='form'>
-              <QuantitativeForm />
-              <button onClick={handleLetsDecide} className='submit-button'>
-                Submit
+          <div className='stepZero'>
+            <div id='left' className='left-section'>
+              <button onClick={() => setStep(step - 1)} className='return'>
+                {"<-"}
               </button>
-            </form>
-            ;
+              <button onClick={() => setStep(step + 1)} className='return'>
+                {"->"}
+              </button>
+              <div id='holder' className='holder'>
+                <div>
+                  <div id='title' className='title'>
+                    DECISION.IO
+                  </div>
+                  <div id='subtitile' className='description'>
+                    A smart tool that harnesses AI and probability theory to mathematically help you make better decisions.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div id='right' className='right-section'>
+              <form className='form' action=''>
+                <label className='select-label' htmlFor='category'>
+                  Enter your decision category:
+                </label>
+                <input
+                  className='select-input'
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  type='text'
+                  name='category'
+                  placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
+                  required
+                />
+                <input className='select-input' type='text' placeholder='How satisfied are you? How risky is the new option?' required />
+                <QuantitativeForm />
+                <button onClick={handleLetsDecide} className='submit-button' disabled={!category.trim()}>
+                  Submit
+                </button>
+              </form>
+            </div>
           </div>
         );
 
       case 2:
-        return (
-          <div>
-            {" "}
-            <button onClick={() => setStep(step - 1)} className='return'>
-              {"<-"}
-            </button>
-            <button onClick={() => setStep(step + 1)} className='return'>
-              {"->"}{" "}
-            </button>
-            <form className='form'>
-              <QualitativeForm />
-              <button onClick={handleLetsDecide} className='submit-button'>
-                Submit
-              </button>
-            </form>
-          </div>
-        );
-      case 3:
         return (
           <div>
             {" "}
@@ -98,14 +114,5 @@ export default function Home() {
     }
   };
 
-  return (
-    <div className='home-container'>
-      <div id='left' className='left-section'>
-        <div id='holder' className='holder'>
-          {renderStepContent()}
-        </div>
-      </div>
-      <div id='right' className='right-section'></div>
-    </div>
-  );
+  return <div className='home-container'>{renderStepContent()}</div>;
 }
