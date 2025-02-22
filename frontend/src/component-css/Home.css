@@ -1,0 +1,80 @@
+.home-container {
+  display: flex;
+  height: 100vh;
+  background-color: #111827;
+  color: white;
+  padding: 2.5rem;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+}
+.left-section {
+  flex: 1;
+  transition: transform 0.3s ease;
+}
+
+.left-section.shifted {
+  transform: translateX(2.5rem);
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  animation: bounce 1s infinite;
+}
+
+.description {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+}
+
+.select-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.select-input {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  width: 16rem;
+  background-color: #1f2937;
+  border: 1px solid #4b5563;
+  border-radius: 0.375rem;
+}
+
+.submit-button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #dc2626;
+  color: white;
+  font-weight: 700;
+  border-radius: 0.375rem;
+}
+
+.submit-button:hover {
+  background-color: #b91c1c;
+}
+
+.right-section {
+  width: 33.333333%;
+  background-color: #1f2937;
+  padding: 1.5rem;
+  overflow-y: auto;
+  border-radius: 0.5rem;
+}
+
+.media-text {
+  text-align: center;
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20%);
+  }
+}
