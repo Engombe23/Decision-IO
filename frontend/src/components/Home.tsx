@@ -5,23 +5,29 @@ import axios from "axios";
 export default function Home() {
   const [category, setCategory] = useState("");
   const [satisfaction, setSatisfaction] = useState("");
-  const [transition, setTransition] = useState(false);
-  const [parsedInitialQeustions, setParsedInitialQuestions] = useState([]);
+  const [parsedInitialQeustions, setParsedInitialQuestions] = useState<{
+    question1: string;
+    question2: string;
+    question3: string;
+    question4: string;
+  }>();
   const [step, setStep] = useState(0);
   const [numTypesDone, setNumTypesDone] = useState(0);
   const [example1, setExample1] = useState("");
   const [example2, setExample2] = useState("");
   const [example3, setExample3] = useState("");
+  const [location, setLocation] = useState("");
 
   async function handleLetsDecide(e: React.FormEvent) {
     e.preventDefault();
     console.log(category);
     setStep(step + 1);
     const data = await axios.post("http://localhost:8000/api/category");
-    console.log(data);
-    // const parsedData = JSON.parse(data);
-    // setParsedInitialQuestions(parsedData);
-    setTransition(true);
+    const parsedData = JSON.parse(JSON.parse(data.data));
+    console.log(`client side data:`);
+    console.log(parsedData);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    setParsedInitialQuestions(parsedData);
   }
 
   async function handleFormSubmit(e: React.FormEvent) {
@@ -98,7 +104,7 @@ export default function Home() {
                   required
                 />
                 <label className='select-label' htmlFor='satisfaction'>
-                  example text
+                  How much do you want to try a new option?
                 </label>
                 <textarea
                   wrap='soft'
@@ -106,11 +112,10 @@ export default function Home() {
                   value={satisfaction}
                   name='satisfaction'
                   onChange={(e) => setSatisfaction(e.target.value)}
-                  placeholder='How much do you want to try a new option?'
                   required
                 />
                 <label className='select-label' htmlFor='numTypesDone'>
-                  example text
+                  {parsedInitialQeustions?.question1}
                 </label>
                 <input
                   className='select-input'
@@ -119,17 +124,16 @@ export default function Home() {
                   type='number'
                   min={0}
                   name='numTypesDone'
-                  placeholder='How many times have you chosen this activity?'
                   required
                 />{" "}
-                <label htmlFor=''>example</label>
-                <textarea wrap='soft' className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} />
-                <label htmlFor=''>example</label>
+                <label htmlFor=''>{parsedInitialQeustions?.question2}</label>
+                <input type='number' className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} />
+                <label htmlFor=''>{parsedInitialQeustions?.question3}</label>
                 <textarea wrap='soft' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
-                <label htmlFor=''>example</label>
+                <label htmlFor=''>{parsedInitialQeustions?.question4}</label>
                 <textarea wrap='soft' className='select-input' value={example3} onChange={(e) => setExample3(e.target.value)} />
-                <label htmlFor=''>example</label>
-                {/* google search thing goes here */}
+                <label htmlFor=''>Enter Your location so we can give you accurate reccomendations.</label>
+                <textarea wrap='soft' className='select-input' value={location} onChange={(e) => setLocation(e.target.value)} />
                 <button onClick={handleFormSubmit} className='submit-button' disabled={!category.trim()}>
                   Submit
                 </button>
@@ -160,8 +164,11 @@ export default function Home() {
 
                 <div className='reportForm' style={{ color: "black" }}>
                   <h1>Results</h1>
+                  {/* results: should you ... or ... keep it specific to the category */}
                   <p>{category}</p>
-                  <p>{satisfaction}</p>
+                  {/* subtitle: add a little bit of subtext maybe? */}
+                  <p>Statistical Analsis of Probability:</p>
+                  {/* add in the P value and other stats*/}
                 </div>
               </div>
             </div>
@@ -180,7 +187,7 @@ export default function Home() {
                   required
                 />
                 <label className='select-label' htmlFor='satisfaction'>
-                  example text
+                  How much do you want to try a new option?
                 </label>
                 <textarea
                   wrap='soft'
@@ -188,11 +195,10 @@ export default function Home() {
                   value={satisfaction}
                   name='satisfaction'
                   onChange={(e) => setSatisfaction(e.target.value)}
-                  placeholder='How much do you want to try a new option?'
                   required
                 />
                 <label className='select-label' htmlFor='numTypesDone'>
-                  example text
+                  {parsedInitialQeustions?.question1}
                 </label>
                 <input
                   className='select-input'
@@ -201,20 +207,16 @@ export default function Home() {
                   type='number'
                   min={0}
                   name='numTypesDone'
-                  placeholder='How many times have you chosen this activity?'
                   required
                 />{" "}
-                <label htmlFor=''>example</label>
-                <textarea wrap='soft' className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} />
-                <label htmlFor=''>example</label>
+                <label htmlFor=''>{parsedInitialQeustions?.question2}</label>
+                <input type='number' className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} />
+                <label htmlFor=''>{parsedInitialQeustions?.question3}</label>
                 <textarea wrap='soft' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
-                <label htmlFor=''>example</label>
+                <label htmlFor=''>{parsedInitialQeustions?.question4}</label>
                 <textarea wrap='soft' className='select-input' value={example3} onChange={(e) => setExample3(e.target.value)} />
-                <label htmlFor=''>example</label>
-                {/* google search thing goes here */}
-                <button onClick={handleFormSubmit} className='submit-button' disabled={!category.trim()}>
-                  Submit
-                </button>
+                <label htmlFor=''>Enter Your location so we can give you accurate reccomendations.</label>
+                <textarea wrap='soft' className='select-input' value={location} onChange={(e) => setLocation(e.target.value)} />
               </form>
             </div>
           </div>

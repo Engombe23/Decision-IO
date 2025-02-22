@@ -100,7 +100,6 @@ textarea.select-input {
   box-sizing: border-box;
 }
 
-
 .select-input:focus {
   width: 90%;
   height: 8vh;
@@ -159,6 +158,8 @@ textarea.select-input {
   width: 80%;
   height: 60vh;
   padding: 5%;
+  color: black;
+  text-align: start;
   background-color: white;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
