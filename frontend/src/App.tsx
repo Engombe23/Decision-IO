@@ -1,21 +1,21 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ResultDisplay from "./components/ResultDisplay";
+import CategorySelection from "./components/CategorySelection";
+import QualitativeForm from "./components/QualitativeForm";
+import QuantitativeForm from "./components/QuantitativeForm";
 
 function App() {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-          <p>hello</p>
-        </p>
-        <a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path='/' element={<CategorySelection />} />
+        <Route path='/quantitative' element={<QuantitativeForm />} />
+        <Route path='/qualitative' element={<QualitativeForm />} />
+        <Route path='/result' element={<ResultDisplay />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
