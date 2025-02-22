@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import "../component-css/Home.css";
 import axios from "axios";
 
-import QualitativeForm from "./QualitativeForm";
-
 export default function Home() {
   const [category, setCategory] = useState("");
   const [satisfaction, setSatisfaction] = useState("");
@@ -19,8 +17,9 @@ export default function Home() {
     e.preventDefault();
     console.log(category);
     setStep(step + 1);
-    // const data = await axios.post("...");
-    //const parsedData = JOSN.parse(data.response);
+    const data = await axios.post("http://localhost:5000/api/category");
+    console.log(data);
+    // const parsedData = JSON.parse(data);
     //setParsedInitialQuestions(parsedData);
     setTransition(true);
   }
@@ -46,11 +45,11 @@ export default function Home() {
                     A smart tool that harnesses AI and probability theory to mathematically help you make better decisions.
                   </div>
                   <form className='form' action=''>
-                    <input
+                    <textarea
+                      wrap='soft'
                       className='select-input'
                       value={category}
                       onChange={(e) => setCategory(e.target.value)}
-                      type='text'
                       name='category'
                       placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
                       required
@@ -65,7 +64,7 @@ export default function Home() {
         );
       case 1:
         return (
-          <div className='stepZero'>
+          <div className='stepOne'>
             <div id='left' className='left-section'>
               <button onClick={() => setStep(step - 1)} className='return'>
                 {"<-"}
@@ -89,11 +88,11 @@ export default function Home() {
                 <label className='select-label' htmlFor='category'>
                   Enter your decision category:
                 </label>
-                <input
+                <textarea
+                  wrap='soft'
                   className='select-input'
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  type='text'
                   name='category'
                   placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
                   required
@@ -101,12 +100,12 @@ export default function Home() {
                 <label className='select-label' htmlFor='satisfaction'>
                   example text
                 </label>
-                <input
+                <textarea
+                  wrap='soft'
                   className='select-input'
                   value={satisfaction}
                   name='satisfaction'
                   onChange={(e) => setSatisfaction(e.target.value)}
-                  type='text'
                   placeholder='How much do you want to try a new option?'
                   required
                 />
@@ -124,11 +123,11 @@ export default function Home() {
                   required
                 />{" "}
                 <label htmlFor=''>example</label>
-                <input type='text' className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} />
+                <textarea wrap='soft' className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} />
                 <label htmlFor=''>example</label>
-                <input type='text' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
+                <textarea wrap='soft' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
                 <label htmlFor=''>example</label>
-                <input type='text' className='select-input' value={example3} onChange={(e) => setExample3(e.target.value)} />
+                <textarea wrap='soft' className='select-input' value={example3} onChange={(e) => setExample3(e.target.value)} />
                 <label htmlFor=''>example</label>
                 {/* google search thing goes here */}
                 <button onClick={handleFormSubmit} className='submit-button' disabled={!category.trim()}>
@@ -171,11 +170,11 @@ export default function Home() {
                 <label className='select-label' htmlFor='category'>
                   Enter your decision category:
                 </label>
-                <input
+                <textarea
+                  wrap='soft'
                   className='select-input'
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  type='text'
                   name='category'
                   placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
                   required
@@ -183,12 +182,12 @@ export default function Home() {
                 <label className='select-label' htmlFor='satisfaction'>
                   example text
                 </label>
-                <input
+                <textarea
+                  wrap='soft'
                   className='select-input'
                   value={satisfaction}
                   name='satisfaction'
                   onChange={(e) => setSatisfaction(e.target.value)}
-                  type='text'
                   placeholder='How much do you want to try a new option?'
                   required
                 />
@@ -206,11 +205,11 @@ export default function Home() {
                   required
                 />{" "}
                 <label htmlFor=''>example</label>
-                <input type='text' className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} />
+                <textarea wrap='soft' className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} />
                 <label htmlFor=''>example</label>
-                <input type='text' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
+                <textarea wrap='soft' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
                 <label htmlFor=''>example</label>
-                <input type='text' className='select-input' value={example3} onChange={(e) => setExample3(e.target.value)} />
+                <textarea wrap='soft' className='select-input' value={example3} onChange={(e) => setExample3(e.target.value)} />
                 <label htmlFor=''>example</label>
                 {/* google search thing goes here */}
                 <button onClick={handleFormSubmit} className='submit-button' disabled={!category.trim()}>
