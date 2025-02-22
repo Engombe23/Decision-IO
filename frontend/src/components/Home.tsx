@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../component-css/Home.css";
 import axios from "axios";
+import QuantitativeForm from "./QuantitativeForm";
+import QualitativeForm from "./QualitativeForm";
 
 export default function Home() {
   const [category, setCategory] = useState("");
@@ -37,7 +39,7 @@ export default function Home() {
                 onChange={(e) => setCategory(e.target.value)}
                 type='text'
                 name='category'
-                placeholder='Input a category (eg. Picking a Resteraunt, Choosing a TV show)'
+                placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
                 required
               />
               <input type='submit' onClick={handleLetsDecide} className='submit-button' disabled={!category.trim()} />
@@ -50,7 +52,10 @@ export default function Home() {
             <button onClick={() => setStep(step - 1)} className='return'>
               {"<-"}
             </button>
-            <form>Step 2 Content</form>;
+            <form className="form">
+              <QuantitativeForm/>
+              <button onClick={handleLetsDecide} className="submit-button">Submit</button>
+            </form>;
           </div>
         );
 
@@ -61,7 +66,10 @@ export default function Home() {
             <button onClick={() => setStep(step - 1)} className='return'>
               {"<-"}
             </button>
-            Step 3 Content
+            <form className="form">
+              <QualitativeForm/>
+              <button onClick={handleLetsDecide} className="submit-button">Submit</button>
+            </form>
           </div>
         );
       case 3:
