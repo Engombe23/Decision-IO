@@ -111,3 +111,13 @@
     transform: translateY(-20%);
   }
 }
+
+/* results page */
+
+.reportForm {
+  width: 80vw;
+  height: 80vh;
+  padding: 5%;
+  background-color: white;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}

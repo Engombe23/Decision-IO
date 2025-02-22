@@ -52,10 +52,16 @@ export default function Home() {
             <button onClick={() => setStep(step - 1)} className='return'>
               {"<-"}
             </button>
-            <form className="form">
-              <QuantitativeForm/>
-              <button onClick={handleLetsDecide} className="submit-button">Submit</button>
-            </form>;
+            <button onClick={() => setStep(step + 1)} className='return'>
+              {"->"}
+            </button>
+            <form className='form'>
+              <QuantitativeForm />
+              <button onClick={handleLetsDecide} className='submit-button'>
+                Submit
+              </button>
+            </form>
+            ;
           </div>
         );
 
@@ -66,9 +72,14 @@ export default function Home() {
             <button onClick={() => setStep(step - 1)} className='return'>
               {"<-"}
             </button>
-            <form className="form">
-              <QualitativeForm/>
-              <button onClick={handleLetsDecide} className="submit-button">Submit</button>
+            <button onClick={() => setStep(step + 1)} className='return'>
+              {"->"}{" "}
+            </button>
+            <form className='form'>
+              <QualitativeForm />
+              <button onClick={handleLetsDecide} className='submit-button'>
+                Submit
+              </button>
             </form>
           </div>
         );
@@ -79,7 +90,7 @@ export default function Home() {
             <button onClick={() => setStep(step - 1)} className='return'>
               {"<-"}
             </button>
-            Step 3 Content
+            <div className='reportForm'>Results</div>
           </div>
         );
       default:
