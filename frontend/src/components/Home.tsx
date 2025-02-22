@@ -22,17 +22,16 @@ export default function Home() {
     e.preventDefault();
     console.log(category);
     setStep(step + 1);
-    const data = await axios.post("http://localhost:8000/api/category");
+    const data = await axios.post("http://localhost:8000/api/category", { category });
     const parsedData = JSON.parse(JSON.parse(data.data));
     console.log(`client side data:`);
     console.log(parsedData);
-    await new Promise((resolve) => setTimeout(resolve, 1000));
     setParsedInitialQuestions(parsedData);
   }
 
   async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
-    console.log("form has been submitted");
+
     setStep(step + 1);
   }
 
@@ -165,10 +164,15 @@ export default function Home() {
                 <div className='reportForm' style={{ color: "black" }}>
                   <h1>Results</h1>
                   {/* results: should you ... or ... keep it specific to the category */}
-                  <p>{category}</p>
+                  <p>Category: {category}</p>
                   {/* subtitle: add a little bit of subtext maybe? */}
-                  <p>Statistical Analsis of Probability:</p>
+                  <p>Statistical Analysis of Probability:</p>
                   {/* add in the P value and other stats*/}
+                  <p>Outcome:</p>
+                  {/* add in the stat outcome as a text */}
+                  <p>Explaination:</p>
+                  {/* give an explaination for the outcome */}
+                  <p>Recommendations:</p>
                 </div>
               </div>
             </div>
