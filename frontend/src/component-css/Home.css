@@ -1,3 +1,7 @@
+html {
+  overflow: hidden;
+}
+
 /* zero */
 .stepZero {
   display: flex;
@@ -21,7 +25,7 @@
 
 .home-container {
   display: flex;
-  height: 150vh;
+  height: 100vh;
   background-color: #111827;
   color: white;
 }
@@ -50,11 +54,6 @@
   align-items: center;
   /* padding: 5%; */
   text-align: center;
-  
-}
-
-.left-section.shifted {
-  transform: translateX(2.5rem);
 }
 
 .title {
@@ -78,85 +77,51 @@
 }
 
 .select-input {
-  text-align: center;
-  margin-top: 0.5rem;
-  padding: 80px;
-  width: 18rem;
+  text-align: left;
+  margin-bottom: 20px !important;
+  margin-top: 10px;
+  padding: 20px 20px;
+  width: 80% !important;
+  height: 80px;
   background-color: #1f2937;
   border: 1px solid #4b5563;
-  border-radius: 3rem;
-  height: 60px;
+  border-radius: 2rem;
   color: wheat;
   transition: all 0.5s;
-  text-align: left;
-  /* Align text to the left */
-  vertical-align: top;
-  /* Start text at the top */
-  overflow-wrap: normal;
-  /* This is for inputs */
-
-}
-
-/* More specific rule for textarea elements using select-input */
-textarea.select-input {
-  text-align: left;
+  font-size: 16px;
+  box-sizing: border-box;
   resize: none;
   overflow-wrap: break-word;
   white-space: pre-wrap;
-  width: 100%;
-  max-width: 500px;
-  height: 80px;
-  padding: 15px;
-  font-size: 16px;
-  box-sizing: border-box;
-  margin: 10px;
-  color: wheat;
 }
 
-.select-label {
-  margin: 10px;
-}
-
-input.select-input {
-  resize: none;
-  overflow-wrap: break-word;
-  white-space: pre-wrap;
-  width: 100%;
-  max-width: 500px;
-  height: 80px;
-  padding: 15px;
-  font-size: 16px;
-  box-sizing: border-box;
-  margin: 10px;
-  text-align: center;
-  color: wheat;
-  background-color: #1f2937;
-}
+/* Specific styles for textarea elements */
 
 .select-input:focus {
-  width: 90%;
-  height: 80px;
+  color: wheat !important;
+  background-color: #111827 !important;
   transition: all 0.5s;
 }
 
 .submit-button {
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.5rem;
-  background-color: #dc2626;
-  color: white;
+  margin-top: 0.5rem;
+  padding: 1rem 2rem;
+  background-color: #1f2937;
+  border: 0px;
   font-weight: 700;
-  outline: 1px solid black;
+  outline: 1px solid wheat;
+  color: white;
   border: 0;
   border-radius: 2rem;
   transition-duration: 0.5s;
 }
 
 .submit-button:hover {
-  background-color: black;
-  color: #dc2626;
-  outline: 1px solid white;
-  margin-top: 1.5rem;
-  padding: 0.75rem 2rem;
+  background-color: wheat;
+  color: #1f2937;
+  outline: 1px solid wheat;
+  margin-top: 0.5rem;
+  padding: 1rem 2rem;
 }
 
 .right-section {
@@ -177,8 +142,25 @@ input.select-input {
   text-align: center;
 }
 
-@keyframes bounce {
+.return {
+  background-color: #1f2937;
+  border: 0px;
+  outline: 1px solid wheat;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 2rem;
+  margin-top: 50px !important;
+  margin-right: auto;
+  margin-bottom: 20px;
+  transition: all 0.5s;
+}
 
+.return:hover {
+  background-color: wheat;
+  color: #1f2937;
+}
+
+@keyframes bounce {
   0%,
   100% {
     transform: translateY(0);
@@ -200,5 +182,4 @@ input.select-input {
   background-color: white;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   justify-content: space-around;
-
 }

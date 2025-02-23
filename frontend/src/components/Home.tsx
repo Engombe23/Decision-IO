@@ -98,12 +98,6 @@ export default function Home() {
         return (
           <div className='stepOne'>
             <div id='left' className='left-section'>
-              <button onClick={() => setStep(step - 1)} className='return'>
-                {"<-"}
-              </button>
-              <button onClick={() => setStep(step + 1)} className='return'>
-                {"->"}
-              </button>
               <div id='holder' className='holder'>
                 <div>
                   <div id='title' className='title'>
@@ -116,10 +110,11 @@ export default function Home() {
               </div>
             </div>
             <div id='right' className='right-section'>
+              <button onClick={() => setStep(step - 1)} className='return'>
+                {"<-"}
+              </button>
               <form className='form' action=''>
-                <label className='select-label' htmlFor='category'>
-                  Enter your decision category:
-                </label>
+                <label htmlFor='category'>Enter your decision category:</label>
                 <textarea
                   wrap='soft'
                   className='select-input'
@@ -129,9 +124,7 @@ export default function Home() {
                   placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
                   required
                 />
-                <label className='select-label' htmlFor='satisfaction'>
-                  How much do you want to try a new option?
-                </label>
+                <label htmlFor='satisfaction'>How much do you want to try a new option?</label>
                 <textarea
                   wrap='soft'
                   className='select-input'
@@ -140,9 +133,7 @@ export default function Home() {
                   onChange={(e) => setSatisfaction(e.target.value)}
                   required
                 />
-                <label className='select-label' htmlFor='example1'>
-                  {parsedInitialQeustions?.question1}
-                </label>
+                <label htmlFor='example1'>{parsedInitialQeustions?.question1}</label>
                 <input className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} type='number' min={0} name='example1' required />
                 <label htmlFor=''>{parsedInitialQeustions?.question2}</label>
                 <input type='number' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
@@ -164,12 +155,6 @@ export default function Home() {
         return (
           <div className='stepZero'>
             <div id='left' className='left-section'>
-              <button onClick={() => setStep(step - 1)} className='return'>
-                {"⬅️"}
-              </button>
-              <button onClick={() => setStep(step + 1)} className='return'>
-                {"➡️"}
-              </button>
               <div id='holder' className='holder'>
                 <div>
                   <div id='title' className='title'>
@@ -179,7 +164,6 @@ export default function Home() {
                     A smart tool that harnesses AI and probability theory to mathematically help you make better decisions.
                   </div>
                 </div>
-
                 <div className='reportForm' style={{ color: "black" }}>
                   <h2>{finalReportObject?.resultTitle}</h2>
                   <h3>{finalReportObject?.subtitle}</h3>
@@ -215,10 +199,11 @@ export default function Home() {
               </div>
             </div>
             <div id='right' className='right-section'>
+              <button onClick={() => setStep(step - 1)} className='return'>
+                {"<-"}
+              </button>
               <form className='form' action=''>
-                <label className='select-label' htmlFor='category'>
-                  Enter your decision category:
-                </label>
+                <label htmlFor='category'>Enter your decision category:</label>
                 <textarea
                   wrap='soft'
                   className='select-input'
@@ -228,9 +213,7 @@ export default function Home() {
                   placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
                   required
                 />
-                <label className='select-label' htmlFor='satisfaction'>
-                  How much do you want to try a new option?
-                </label>
+                <label htmlFor='satisfaction'>How much do you want to try a new option?</label>
                 <textarea
                   wrap='soft'
                   className='select-input'
@@ -239,9 +222,7 @@ export default function Home() {
                   onChange={(e) => setSatisfaction(e.target.value)}
                   required
                 />
-                <label className='select-label' htmlFor='example1'>
-                  {parsedInitialQeustions?.question1}
-                </label>
+                <label htmlFor='example1'>{parsedInitialQeustions?.question1}</label>
                 <input className='select-input' value={example1} onChange={(e) => setExample1(e.target.value)} type='number' min={0} name='example1' required />
                 <label htmlFor=''>{parsedInitialQeustions?.question2}</label>
                 <input type='number' className='select-input' value={example2} onChange={(e) => setExample2(e.target.value)} />
