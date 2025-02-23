@@ -17,6 +17,8 @@ export default function Home() {
   const [example3, setExample3] = useState("");
   const [example4, setExample4] = useState("");
   const [location, setLocation] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const [finalReportObject, setFinalReportObject] = useState<{
     shouldTry: boolean;
     P_E: number;
@@ -34,17 +36,20 @@ export default function Home() {
 
   async function handleLetsDecide(e: React.FormEvent) {
     e.preventDefault();
-    console.log(category);
-    setStep(step + 1);
+    setLoading(true);
+
     const data = await axios.post("http://localhost:8000/api/category", { category });
     const parsedData = JSON.parse(JSON.parse(data.data));
-    console.log(`client side data:`);
-    console.log(parsedData);
     setParsedInitialQuestions(parsedData);
+
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    setLoading(false);
+    setStep(step + 1);
   }
 
   async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
+    setLoading(true);
 
     const finalResults = await axios.post("http://localhost:8000/api/results", {
       category,
@@ -55,9 +60,11 @@ export default function Home() {
       parsedInitialQeustions,
       location,
     });
-
-    alert(finalResults.data);
     setFinalReportObject(JSON.parse(finalResults.data));
+
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+
+    setLoading(false);
 
     setStep(step + 1);
   }
@@ -73,7 +80,7 @@ export default function Home() {
                   <div id='title' className='title'>
                     DECISION.IO
                   </div>
-                  <div id='subtitile' className='description'>
+                  <div id='subtitile' style={{ marginBottom: "20px" }} className='description'>
                     A smart tool that harnesses AI and probability theory to mathematically help you make better decisions.
                   </div>
                   <form className='form' action=''>
@@ -86,7 +93,13 @@ export default function Home() {
                       placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
                       required
                     />
-                    <input type='submit' onClick={handleLetsDecide} className='submit-button' disabled={!category.trim()} />
+                    <input
+                      type='submit'
+                      onClick={handleLetsDecide}
+                      value={loading ? "loading..." : "Submit"}
+                      className='submit-button'
+                      disabled={!category.trim()}
+                    />
                   </form>
                 </div>
               </div>
@@ -114,14 +127,14 @@ export default function Home() {
                 {"<-"}
               </button>
               <form className='form' action=''>
-                <label htmlFor='category'>Enter your decision category:</label>
+                <label htmlFor='category'>Enter some details about your decision:</label>
                 <textarea
                   wrap='soft'
                   className='select-input'
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   name='category'
-                  placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
+                  placeholder='Input a bit of info about your decision (eg. Picking a Restaurant, Choosing a TV show)'
                   required
                 />
                 <label htmlFor='satisfaction'>How much do you want to try a new option?</label>
@@ -143,7 +156,7 @@ export default function Home() {
                 <textarea wrap='soft' className='select-input' value={example4} onChange={(e) => setExample4(e.target.value)} />
                 <label htmlFor=''>Enter Your location so we can give you accurate reccomendations.</label>
                 <textarea wrap='soft' className='select-input' value={location} onChange={(e) => setLocation(e.target.value)} />
-                <button onClick={handleFormSubmit} className='submit-button' disabled={!category.trim()}>
+                <button onClick={handleFormSubmit} value={loading ? "Calculating" : "Submit"} className='submit-button' disabled={!category.trim()}>
                   Submit
                 </button>
               </form>
@@ -171,6 +184,13 @@ export default function Home() {
                     <strong>Decision:</strong> {finalReportObject?.decision}
                   </p>
                   <p>
+                    <strong>Explanation:</strong> {finalReportObject?.explaination}
+                  </p>
+                  <p>
+                    <strong>Recommendations:</strong> {finalReportObject?.recommendations}
+                  </p>
+                  <h2>Statistical Analysis</h2>
+                  <p>
                     <strong>Probability of Exploring (P_E):</strong> {finalReportObject?.P_E !== undefined ? finalReportObject.P_E.toFixed(3) : "N/A"}
                   </p>
                   <p>
@@ -189,12 +209,6 @@ export default function Home() {
                     <strong>Openness to New Experiences:</strong>{" "}
                     {finalReportObject?.opennessToNew !== undefined ? Number(finalReportObject.opennessToNew) : "N/A"}
                   </p>
-                  <p>
-                    <strong>Explanation:</strong> {finalReportObject?.explaination}
-                  </p>
-                  <p>
-                    <strong>Recommendations:</strong> {finalReportObject?.recommendations}
-                  </p>
                 </div>
               </div>
             </div>
@@ -203,14 +217,14 @@ export default function Home() {
                 {"<-"}
               </button>
               <form className='form' action=''>
-                <label htmlFor='category'>Enter your decision category:</label>
+                <label htmlFor='category'>Enter some details about your decision:</label>
                 <textarea
                   wrap='soft'
                   className='select-input'
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   name='category'
-                  placeholder='Input a category (eg. Picking a Restaurant, Choosing a TV show)'
+                  placeholder='Input some details about your decision (eg. Picking a Restaurant, Choosing a TV show)'
                   required
                 />
                 <label htmlFor='satisfaction'>How much do you want to try a new option?</label>

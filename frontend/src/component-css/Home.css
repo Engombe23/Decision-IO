@@ -175,11 +175,46 @@ html {
 
 .reportForm {
   width: 80%;
-  height: 60vh;
+  height: 65vh;
   padding: 5%;
   color: black;
   text-align: start;
   background-color: white;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
   justify-content: space-around;
+  overflow-y: auto;
+  border-radius: 2rem;
+}
+
+.reportForm h2 {
+  color: #1e293b;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.reportForm h3 {
+  color: #475569;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.reportForm p {
+  color: #334155;
+  line-height: 1.4;
+  margin: 1rem 0;
+  padding: 0.5rem 0.75rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+.reportForm strong {
+  color: #1e40af;
+  font-weight: 600;
+  margin-right: 0.5rem;
+}
+.reportForm p:hover {
+  transform: translateY(-2px);
+  transition: transform 0.2s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
