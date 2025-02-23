@@ -15,10 +15,11 @@ app.use(express.json());
 app.post("/api/category", async (req, res) => {
   try {
     const category = req.body.category;
-    console.log(req.body.category);
+    console.log(`the req.body.category for results is ${category}`);
+
     const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
-    const schema = {
+    const schema1 = {
       description: "Schema for gathering user input to determine explore vs. exploit probability",
       type: SchemaType.OBJECT,
       properties: {
@@ -50,11 +51,11 @@ app.post("/api/category", async (req, res) => {
       model: "gemini-2.0-flash",
       generationConfig: {
         responseMimeType: "application/json",
-        responseSchema: schema,
+        responseSchema: schema1,
       },
     });
 
-    const result = await model.generateContent(
+    const firstResult = await model.generateContent(
       `You are an intelligent assistant designed to help users determine whether they should explore a new option or stick with their existing choice. Your task is to generate an object containing four *highly specific* questions based on the provided category.
 
 **Context:**  
@@ -84,8 +85,9 @@ json output -
   "question4": "If you were to watch something new, would you prefer something similar to Breaking Bad or a completely different genre?"
 }`
     );
-    console.log(result.response.text());
-    res.json(JSON.stringify(result.response.text()));
+
+    console.log(`the first gemini response is: ${firstResult.response.text()}`);
+    res.json(JSON.stringify(firstResult.response.text()));
   } catch (error) {
     console.error(error);
     res.status(500).json({ status: "error", message: "An error occurred" });
@@ -94,10 +96,9 @@ json output -
 
 app.post("/api/results", async (req, res) => {
   const userInput = req.body;
-  console.log(userInput);
+  console.log(`the user form input is ${userInput}`);
   try {
-    const { category, example1, example2, example3, example4, parsedInitialQeustions } = req.body;
-
+    const { category, example1, example2, example3, example4, parsedInitialQeustions, location } = req.body;
     // Extract individual questions
     const { question1, question2, question3, question4 } = parsedInitialQeustions;
 
@@ -110,6 +111,7 @@ app.post("/api/results", async (req, res) => {
     console.log("Question 2:", question2);
     console.log("Question 3:", question3);
     console.log("Question 4:", question4);
+    console.log("Location: ", location);
 
     const genAI = new GoogleGenerativeAI(process.env.API_KEY);
     const schema = {
@@ -156,7 +158,7 @@ app.post("/api/results", async (req, res) => {
       },
     });
 
-    const result = await model.generateContent(`
+    const result1 = await model.generateContent(`
       
     You are an intelligent assistant that processes user responses and normalizes them into a standardized range (0-1) for 
     probability calculations.
@@ -177,11 +179,15 @@ app.post("/api/results", async (req, res) => {
     ### **Important Rules:**  
     1. **Ensure all outputs are normalized between 0 and 1.**  
     2. **Use appropriate scaling methods based on the input type.**  
-    3. **Maintain consistency across all examples to ensure accurate probability calculations.**`);
-    console.log(result.response.text());
+    3. **Maintain consistency across all examples to ensure accurate probability calculations.**
+    `);
+
+    console.log(`the first response of scaled data is: ${result1.response.text()}`);
 
     // Parse AI response to JSON - need to actually check if this parses properly!!!!!!
-    const scaledData = JSON.parse(aiResponse);
+    const scaledData = JSON.parse(result1.response.text());
+
+    console.log(`the parsed version is: ${scaledData}`);
 
     // Extract feature-scaled values
     const T = scaledData.scaledExample1; // Number of times user chose familiar option (normalized)
@@ -216,6 +222,16 @@ app.post("/api/results", async (req, res) => {
       shouldTry = false;
     }
 
+    console.log(
+      `T: ${T}, k: ${k}, satisfaction: ${satisfaction}, shouldTry: ${shouldTry} riskTolerance: ${riskTolerance}, opennessToNew: ${opennessToNew}, P_E: ${P_E}`
+    );
+
+    const reportData = await generateFinalReport(P_E, shouldTry, satisfaction, riskTolerance, opennessToNew, location);
+
+    console.log(`the final report data is ${reportData}`);
+    const parsedReportData = JSON.parse(reportData);
+    console.log(`the parsed report data is ${parsedReportData}`);
+
     const finalResultObject = {
       shouldTry: shouldTry,
       P_E: P_E,
@@ -224,12 +240,15 @@ app.post("/api/results", async (req, res) => {
       satisfaction: satisfaction,
       riskTolerance: riskTolerance,
       opennessToNew: opennessToNew,
-      resultTitle: "none",
-      subtitle: "none",
-      decision: "none",
-      explaination: "none",
-      recommendations: "none",
+      resultTitle: parsedReportData?.resultTitle,
+      subtitle: parsedReportData?.subtitle,
+      decision: parsedReportData?.decision,
+      explaination: parsedReportData?.explanation,
+      recommendations: parsedReportData?.recommendations,
     };
+
+    console.log(`the final object is:`);
+    console.log(finalResultObject);
 
     res.json(JSON.stringify(finalResultObject));
   } catch (error) {
@@ -242,3 +261,74 @@ app.post("/api/results", async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+async function generateFinalReport(probability, shouldTry, satisfaction, riskTolerance, opennessToNew, location) {
+  const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+
+  const schema3 = {
+    description: "Schema for generating a structured decision output for explore vs. exploit calculations.",
+    type: SchemaType.OBJECT,
+    properties: {
+      resultTitle: {
+        type: SchemaType.STRING,
+        description: "A concise title summarizing the decision outcome.",
+        nullable: false,
+      },
+      subtitle: {
+        type: SchemaType.STRING,
+        description: "A short subtitle giving context to the decision.",
+        nullable: false,
+      },
+      decision: {
+        type: SchemaType.STRING,
+        description: "A clear decision statement indicating whether the user should explore a new option or exploit a familiar one.",
+        nullable: false,
+      },
+      explanation: {
+        type: SchemaType.STRING,
+        description: "A brief explanation of why this decision was reached based on user inputs and probability calculations.",
+        nullable: false,
+      },
+      recommendations: {
+        type: SchemaType.STRING,
+        description: "Suggestions on next steps based on the decision, such as trying a new option or sticking with the current one.",
+        nullable: false,
+      },
+    },
+    required: ["resultTitle", "subtitle", "decision", "explanation", "recommendations"],
+  };
+
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.0-flash",
+    generationConfig: {
+      responseMimeType: "application/json",
+      responseSchema: schema3,
+    },
+  });
+
+  const result3 = await model.generateContent(`
+  You are an intelligent decision-making assistant that helps users determine whether they should explore a new option or stick with a familiar one. Your task is to generate a structured decision output based on the provided inputs.  
+
+### **Context:**  
+The user has provided key decision-making factors, including probability of exploring: ${probability}, should they try something new: ${shouldTry}, satisfaction level: ${satisfaction}, risk tolerance: ${riskTolerance}, openness to new experiences: ${opennessToNew}, and geographic location: ${location}.  
+
+- **Probability (0-1):** A numerical value representing the likelihood of exploring a new option. If **above 0.5**, the user should explore something new; otherwise, they should continue with their familiar choice.  
+- **shouldTry (true/false):** A boolean value that **must align** with the probability outcome. If probability > 0.5, then shouldTry must be true; otherwise, it must be false.  
+- **Satisfaction (0-1):** How much the user enjoys their current choice (higher means more satisfied).  
+- **Risk Tolerance (0-1):** How comfortable the user is with taking risks (higher means more adventurous).  
+- **Openness to New (0-1):** How much the user desires to try something new (higher means more open).  
+- **Location (string):** The user’s geographic location, which **must be used to tailor recommendations**.  
+
+### **Your Task:**  
+Generate a JSON object following this **exact schema**:  
+{
+  "resultTitle": "Your Personalized Decision",
+  "subtitle": "Based on your preferences and probability analysis",
+  "decision": "Explore new options" or "Stick with your current choice",
+  "explanation": "Explain why the decision was made using probability, satisfaction, risk tolerance, and openness to new experiences.",
+  "recommendations": "Provide 2-3 personalized suggestions based on the user's location."
+}`);
+
+  // Parse AI response to JSON - need to actually check if this parses properly!!!!!!
+  return (finalReport = result3.response.text());
+}
