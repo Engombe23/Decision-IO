@@ -172,9 +172,9 @@ app.post("/api/results", async (req, res) => {
     - **example2 (Satisfaction - Scale 1-10)**: The user's rating of their current choice. **Convert to a range from 0 (not satisfied) to 1 
     (fully satisfied).**  
     - **example3 (Risk Tolerance - Text Input)**: A qualitative measure of risk (e.g., "not at all", "somewhat", "very"). **Map this to a 
-    numerical scale (e.g., 'not at all' → 0, 'somewhat' → 0.5, 'very' → 1).**  
+    numerical scale (e.g., lower qualtitative inputs like not at all will be closer to 0, 'answers like somwehat or unsure will be closer to 0.5, answers indicating a higher risk tolerance will be closer to 1).**  
     - **example4 (Openness to New Experiences - Text Input)**: User preference for trying something new (e.g., "similar", "slightly different", 
-    "completely different"). **Map this to a scale (e.g., 'similar' → 0, 'slightly different' → 0.5, 'completely different' → 1).**  
+    "completely different"). **Map this to a scale (e.g., not open will be closer to 0, partially open to new experiences will be closer to 0.5, completely open to new experiences will be closer to 1).**  
 
     ### **Important Rules:**  
     1. **Ensure all outputs are normalized between 0 and 1.**  
@@ -226,7 +226,23 @@ app.post("/api/results", async (req, res) => {
       `T: ${T}, k: ${k}, satisfaction: ${satisfaction}, shouldTry: ${shouldTry} riskTolerance: ${riskTolerance}, opennessToNew: ${opennessToNew}, P_E: ${P_E}`
     );
 
-    const reportData = await generateFinalReport(P_E, shouldTry, satisfaction, riskTolerance, opennessToNew, location);
+    const reportData = await generateFinalReport(
+      P_E,
+      shouldTry,
+      satisfaction,
+      riskTolerance,
+      opennessToNew,
+      location,
+      category,
+      example1,
+      example2,
+      example3,
+      example4,
+      question1,
+      question2,
+      question3,
+      question4
+    );
 
     console.log(`the final report data is ${reportData}`);
     const parsedReportData = JSON.parse(reportData);
@@ -262,7 +278,23 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-async function generateFinalReport(probability, shouldTry, satisfaction, riskTolerance, opennessToNew, location) {
+async function generateFinalReport(
+  probability,
+  shouldTry,
+  satisfaction,
+  riskTolerance,
+  opennessToNew,
+  location,
+  category,
+  example1,
+  example2,
+  example3,
+  example4,
+  question1,
+  question2,
+  question3,
+  question4
+) {
   const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
   const schema3 = {
@@ -311,13 +343,14 @@ async function generateFinalReport(probability, shouldTry, satisfaction, riskTol
 
 ### **Context:**  
 The user has provided key decision-making factors, including probability of exploring: ${probability}, should they try something new: ${shouldTry}, satisfaction level: ${satisfaction}, risk tolerance: ${riskTolerance}, openness to new experiences: ${opennessToNew}, and geographic location: ${location}.  
+The user's decision category is: ${category}. They provided the following responses to the initial questions: ${example1} for "${question1}", ${example2} for "${question2}", ${example3} for "${question3}", and ${example4} for "${question4}".
 
 - **Probability (0-1):** A numerical value representing the likelihood of exploring a new option. If **above 0.5**, the user should explore something new; otherwise, they should continue with their familiar choice.  
 - **shouldTry (true/false):** A boolean value that **must align** with the probability outcome. If probability > 0.5, then shouldTry must be true; otherwise, it must be false.  
 - **Satisfaction (0-1):** How much the user enjoys their current choice (higher means more satisfied).  
 - **Risk Tolerance (0-1):** How comfortable the user is with taking risks (higher means more adventurous).  
 - **Openness to New (0-1):** How much the user desires to try something new (higher means more open).  
-- **Location (string):** The user’s geographic location, which **must be used to tailor recommendations**.  
+- **Location (string):** The users geographic location, which **must be used to tailor recommendations**.  
 
 ### **Your Task:**  
 Generate a JSON object following this **exact schema**:  
@@ -326,7 +359,7 @@ Generate a JSON object following this **exact schema**:
   "subtitle": "Based on your preferences and probability analysis",
   "decision": "Explore new options" or "Stick with your current choice",
   "explanation": "Explain why the decision was made using probability, satisfaction, risk tolerance, and openness to new experiences.",
-  "recommendations": "Provide 2-3 personalized suggestions based on the user's location."
+  "recommendations": "Provide 2-3 personalized suggestions based on the user's location and the specific ."
 }`);
 
   // Parse AI response to JSON - need to actually check if this parses properly!!!!!!

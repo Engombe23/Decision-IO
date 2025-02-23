@@ -17,6 +17,20 @@ export default function Home() {
   const [example3, setExample3] = useState("");
   const [example4, setExample4] = useState("");
   const [location, setLocation] = useState("");
+  const [finalReportObject, setFinalReportObject] = useState<{
+    shouldTry: boolean;
+    P_E: number;
+    T: number;
+    k: number;
+    satisfaction: number;
+    riskTolerance: number;
+    opennessToNew: number;
+    resultTitle: string;
+    subtitle: string;
+    decision: string;
+    explaination: string;
+    recommendations: string;
+  } | null>(null);
 
   async function handleLetsDecide(e: React.FormEvent) {
     e.preventDefault();
@@ -32,14 +46,18 @@ export default function Home() {
   async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    /*const results = await axios.post("http://localhost:8000/api/results", {
+    const finalResults = await axios.post("http://localhost:8000/api/results", {
       category,
       example1,
       example2,
       example3,
       example4,
       parsedInitialQeustions,
-    });*/
+      location,
+    });
+
+    alert(finalResults.data);
+    setFinalReportObject(JSON.parse(finalResults.data));
 
     setStep(step + 1);
   }
@@ -163,17 +181,36 @@ export default function Home() {
                 </div>
 
                 <div className='reportForm' style={{ color: "black" }}>
-                  <h1>Results</h1>
-                  {/* results: should you ... or ... keep it specific to the category */}
-                  <p>Category: {category}</p>
-                  {/* subtitle: add a little bit of subtext maybe? */}
-                  <p>Statistical Analysis of Probability:</p>
-                  {/* add in the P value and other stats*/}
-                  <p>Outcome:</p>
-                  {/* add in the stat outcome as a text */}
-                  <p>Explaination:</p>
-                  {/* give an explaination for the outcome */}
-                  <p>Recommendations:</p>
+                  <h2>{finalReportObject?.resultTitle}</h2>
+                  <h3>{finalReportObject?.subtitle}</h3>
+                  <p>
+                    <strong>Decision:</strong> {finalReportObject?.decision}
+                  </p>
+                  <p>
+                    <strong>Probability of Exploring (P_E):</strong> {finalReportObject?.P_E !== undefined ? finalReportObject.P_E.toFixed(3) : "N/A"}
+                  </p>
+                  <p>
+                    <strong>Times Chosen Existing Option (T):</strong> {finalReportObject?.T !== undefined ? finalReportObject.T.toFixed(3) : "N/A"}
+                  </p>
+                  <p>
+                    <strong>Exploration Adjustment Constant (k):</strong> {finalReportObject?.k !== undefined ? finalReportObject.k.toFixed(3) : "N/A"}
+                  </p>
+                  <p>
+                    <strong>Satisfaction Level:</strong> {finalReportObject?.satisfaction !== undefined ? Number(finalReportObject.satisfaction) : "N/A"}
+                  </p>
+                  <p>
+                    <strong>Risk Tolerance:</strong> {finalReportObject?.riskTolerance !== undefined ? Number(finalReportObject.riskTolerance) : "N/A"}
+                  </p>
+                  <p>
+                    <strong>Openness to New Experiences:</strong>{" "}
+                    {finalReportObject?.opennessToNew !== undefined ? Number(finalReportObject.opennessToNew) : "N/A"}
+                  </p>
+                  <p>
+                    <strong>Explanation:</strong> {finalReportObject?.explaination}
+                  </p>
+                  <p>
+                    <strong>Recommendations:</strong> {finalReportObject?.recommendations}
+                  </p>
                 </div>
               </div>
             </div>
