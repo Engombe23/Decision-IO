@@ -32,14 +32,14 @@ export default function Home() {
   async function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    const results = await axios.post("http://localhost:8000/api/results", {
+    /*const results = await axios.post("http://localhost:8000/api/results", {
       category,
       example1,
       example2,
       example3,
       example4,
       parsedInitialQeustions,
-    });
+    });*/
 
     setStep(step + 1);
   }
@@ -147,10 +147,10 @@ export default function Home() {
           <div className='stepZero'>
             <div id='left' className='left-section'>
               <button onClick={() => setStep(step - 1)} className='return'>
-                {"<-"}
+                {"⬅️"}
               </button>
               <button onClick={() => setStep(step + 1)} className='return'>
-                {"->"}
+                {"➡️"}
               </button>
               <div id='holder' className='holder'>
                 <div>

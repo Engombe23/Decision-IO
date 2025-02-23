@@ -21,10 +21,11 @@
 
 .home-container {
   display: flex;
-  height: 100vh;
+  height: 150vh;
   background-color: #111827;
   color: white;
 }
+
 .holder {
   display: flex;
   flex-direction: column;
@@ -39,6 +40,7 @@
   justify-content: center;
   align-items: center;
 }
+
 .left-section {
   flex: 1;
   transition: transform 0.3s ease;
@@ -46,8 +48,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 5%;
+  /* padding: 5%; */
   text-align: center;
+  
 }
 
 .left-section.shifted {
@@ -70,39 +73,69 @@
   display: block;
   font-size: 0.875rem;
   font-weight: 500;
+  text-align: center;
+  width: 100%;
 }
 
 .select-input {
-  text-align: left;
+  text-align: center;
   margin-top: 0.5rem;
-  padding: 1.5rem;
-  width: 16rem;
+  padding: 80px;
+  width: 18rem;
   background-color: #1f2937;
   border: 1px solid #4b5563;
   border-radius: 3rem;
-  height: 4vh;
-  color: white;
+  height: 60px;
+  color: wheat;
   transition: all 0.5s;
-  text-align: left; /* Align text to the left */
-  vertical-align: top; /* Start text at the top */
-  overflow-wrap: normal; /* This is for inputs */
+  text-align: left;
+  /* Align text to the left */
+  vertical-align: top;
+  /* Start text at the top */
+  overflow-wrap: normal;
+  /* This is for inputs */
+
 }
 
 /* More specific rule for textarea elements using select-input */
 textarea.select-input {
+  text-align: left;
+  resize: none;
   overflow-wrap: break-word;
   white-space: pre-wrap;
   width: 100%;
   max-width: 500px;
-  height: 50px;
-  padding: 8px;
+  height: 80px;
+  padding: 15px;
   font-size: 16px;
   box-sizing: border-box;
+  margin: 10px;
+  color: wheat;
+}
+
+.select-label {
+  margin: 10px;
+}
+
+input.select-input {
+  resize: none;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  width: 100%;
+  max-width: 500px;
+  height: 80px;
+  padding: 15px;
+  font-size: 16px;
+  box-sizing: border-box;
+  margin: 10px;
+  text-align: center;
+  color: wheat;
+  background-color: #1f2937;
 }
 
 .select-input:focus {
   width: 90%;
-  height: 8vh;
+  height: 80px;
   transition: all 0.5s;
 }
 
@@ -136,6 +169,8 @@ textarea.select-input {
   justify-content: center;
   align-items: center;
   border-radius: 0.5rem;
+  padding-top: 250px;
+  text-align: center;
 }
 
 .media-text {
@@ -143,10 +178,12 @@ textarea.select-input {
 }
 
 @keyframes bounce {
+
   0%,
   100% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-20%);
   }
@@ -162,4 +199,6 @@ textarea.select-input {
   text-align: start;
   background-color: white;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  justify-content: space-around;
+
 }
